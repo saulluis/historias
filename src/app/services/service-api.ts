@@ -7,15 +7,20 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ServiceAPI {
+  // 👇 ESTA ES LA URL DE TU BACKEND EN RAILWAY
+  private rootUrl = 'https://backpalenque-production.up.railway.app';
 
-  private baseUrl = 'http://localhost:3000/diaCata'; 
-  private urlUsuario = 'http://localhost:3000/usuario';
-  private urlInfoHome = 'http://localhost:3000/info-home';
-  private urlBebidas = 'http://localhost:3000/bebidas';
-  private urlCategorias = 'http://localhost:3000/categoria';
-  private urlapartados = 'http://localhost:3000/apartados';
+  // Aquí concatenamos la URL principal con los endpoints
+  private baseUrl = this.rootUrl + '/diaCata';
+  private urlUsuario = this.rootUrl + '/usuario';
+  private urlInfoHome = this.rootUrl + '/info-home';
+  private urlBebidas = this.rootUrl + '/bebidas';
+  private urlCategorias = this.rootUrl + '/categoria';
+  private urlapartados = this.rootUrl + '/apartados';
 
   constructor(private http: HttpClient) {}
+
+  // ... El resto de tu código sigue igual hacia abajo ...
 
   // ============ EXPERIENCIAS ============
   // Método para obtener todos los registros de experiencias
@@ -60,23 +65,29 @@ export class ServiceAPI {
 
   // Método para eliminar una experiencia por ID
   deleteExperiencia(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/delete/${id}`, { responseType: 'text' as 'json' }).pipe(
-      catchError((err) => {
-        if (err?.status === 404) {
-          // Primera alternativa: DELETE /diaCata/remove/{id}
-          return this.http.delete(`${this.baseUrl}/remove/${id}`, { responseType: 'text' as 'json' }).pipe(
-            catchError((err2) => {
-              if (err2?.status === 404) {
-                // Segunda alternativa: DELETE /diaCata/{id}
-                return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' as 'json' });
-              }
-              return throwError(() => err2);
-            })
-          );
-        }
-        return throwError(() => err);
-      })
-    );
+    return this.http
+      .delete(`${this.baseUrl}/delete/${id}`, { responseType: 'text' as 'json' })
+      .pipe(
+        catchError((err) => {
+          if (err?.status === 404) {
+            // Primera alternativa: DELETE /diaCata/remove/{id}
+            return this.http
+              .delete(`${this.baseUrl}/remove/${id}`, { responseType: 'text' as 'json' })
+              .pipe(
+                catchError((err2) => {
+                  if (err2?.status === 404) {
+                    // Segunda alternativa: DELETE /diaCata/{id}
+                    return this.http.delete(`${this.baseUrl}/${id}`, {
+                      responseType: 'text' as 'json',
+                    });
+                  }
+                  return throwError(() => err2);
+                })
+              );
+          }
+          return throwError(() => err);
+        })
+      );
   }
 
   // ============ BEBIDAS / PRODUCTOS ============
@@ -172,7 +183,11 @@ export class ServiceAPI {
     );
   }
 
-  createApartado(data: { cantidad: number; usuarioID: number; bebidasID: number }): Observable<any> {
+  createApartado(data: {
+    cantidad: number;
+    usuarioID: number;
+    bebidasID: number;
+  }): Observable<any> {
     console.log('📦 Enviando apartado a:', this.urlapartados);
     console.log('📦 Datos:', data);
     return this.http.post(this.urlapartados, data).pipe(
@@ -186,12 +201,14 @@ export class ServiceAPI {
   }
 
   deleteApartado(id: number): Observable<any> {
-    return this.http.delete(`${this.urlapartados}/remove/${id}`, { responseType: 'text' as 'json' }).pipe(
-      catchError((err) => {
-        console.error('Error eliminando apartado:', err);
-        return throwError(() => err);
-      })
-    );
+    return this.http
+      .delete(`${this.urlapartados}/remove/${id}`, { responseType: 'text' as 'json' })
+      .pipe(
+        catchError((err) => {
+          console.error('Error eliminando apartado:', err);
+          return throwError(() => err);
+        })
+      );
   }
 
   getApartadosByUsuario(usuarioId: number): Observable<any[]> {
