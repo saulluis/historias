@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class ServiceAPI {
   // 👇 ESTA ES LA URL DE TU BACKEND EN RAILWAY
-  private rootUrl = 'https://backpalenque-production.up.railway.app';
+  private rootUrl = 'https://backpalenque-production-7d19.up.railway.app';
 
   // Aquí concatenamos la URL principal con los endpoints
   private baseUrl = this.rootUrl + '/diaCata';
