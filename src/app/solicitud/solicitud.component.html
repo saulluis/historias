@@ -1,0 +1,128 @@
+<!-- Toast Notification -->
+@if (showToast) {
+  <div class="toast" [class.success]="toastType === 'success'" [class.error]="toastType === 'error'">
+    <span class="toast-icon">{{ toastType === 'success' ? '✓' : '✕' }}</span>
+    <span class="toast-message">{{ toastMessage }}</span>
+  </div>
+}
+
+<section class="solicitud">
+  @if (!selectedCata) {
+    <div class="catas-container">
+      @if (catas$ | async; as catas) {
+        @for (c of catas; track c.id) {
+          <article class="cata-card">
+            <header class="cata-header">
+              <h2>{{ c.name }}</h2>
+              @if ((c.capacidad ?? 0) <= 0) {
+                <span class="badge-estado sin-lugares">Sin lugares</span>
+              } @else if (c.estado) {
+                <span class="badge-estado activo">Disponible</span>
+              } @else {
+                <span class="badge-estado inactivo">Inactivo</span>
+              }
+            </header>
+            <div class="cata-body">
+              <p class="descripcion">{{ c.description }}</p>
+              <div class="cata-info">
+                <div class="info-item">
+                  <strong>Fecha:</strong>
+                  <span>{{ c.fecha | date:'MMM d, y, h:mm a' }}</span>
+                </div>
+                <div class="info-item">
+                  <strong>Capacidad:</strong>
+                  <span>{{ c.capacidad }} lugares</span>
+                </div>
+                <div class="info-item costo">
+                  <strong>Costo:</strong>
+                  <span class="precio">{{ c.costo | currency:'MXN':'symbol':'1.2-2' }}</span>
+                </div>
+              </div>
+              <button
+                type="button"
+                class="btn-seleccionar"
+                (click)="selectCata(c)"
+                [disabled]="(c.capacidad ?? 0) <= 0 || c.estado === false"
+              >
+                Seleccionar Cata
+              </button>
+            </div>
+          </article>
+        }
+      } @else {
+        <p class="loading">Cargando catas disponibles...</p>
+      }
+    </div>
+  } @else {
+    <div class="formulario-aplicacion">
+      <div class="form-header">
+        <div class="exp-badge-large">{{ selectedCata?.fecha | date:'d' }}</div>
+        <div>
+          <h2>Formulario de Aplicación</h2>
+          <p class="form-subtitle">{{ selectedCata?.name }}</p>
+        </div>
+      </div>
+
+      <div style="padding: 1.5rem; background: white;">
+        <div class="cata-resumen">
+          <div class="resumen-info">
+            <strong>Día de cata seleccionado:</strong>
+            <span>{{ selectedCata?.name }} — {{ selectedCata?.fecha | date:'MMM d, y, h:mm a' }}</span>
+          </div>
+          <button type="button" class="btn-cambiar" (click)="cambiarCata()">Cambiar</button>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+          <div class="form-group">
+            <label>Nombre Completo</label>
+            <input type="text" formControlName="nome" placeholder="Ingresa tu nombre completo" />
+            @if (form.get('nome')?.touched && form.get('nome')?.invalid) {
+              <small class="error">Nombre requerido (mínimo 2 caracteres)</small>
+            }
+          </div>
+
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" formControlName="email" placeholder="correo@dominio.com" />
+            @if (form.get('email')?.touched && form.get('email')?.invalid) {
+              <small class="error">Email inválido</small>
+            }
+          </div>
+
+          <div class="form-group">
+            <label>Teléfono</label>
+            <input type="tel" formControlName="telefono" placeholder="10 dígitos" />
+            @if (form.get('telefono')?.touched && form.get('telefono')?.invalid) {
+              <small class="error">Teléfono de 10 dígitos</small>
+            }
+          </div>
+
+          <div class="form-group">
+            <label>Género</label>
+            <select formControlName="genero">
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+
+          @if (form.get('Idcata')?.invalid) {
+            <small class="error">Selecciona un día de cata</small>
+          }
+
+          <div class="form-actions">
+            <button type="button" class="btn-cancelar" (click)="volverAExperiencias()">
+              Cancelar
+            </button>
+            <button type="submit" class="btn-confirmar-asistencia" [disabled]="loading || form.invalid">
+              Confirmar Asistencia
+            </button>
+          </div>
+        </form>
+
+        @if (successMsg) { <p class="success" style="margin-top: 1rem; font-weight: 600;">{{ successMsg }}</p> }
+        @if (errorMsg) { <p class="error" style="margin-top: 1rem; font-weight: 600;">{{ errorMsg }}</p> }
+      </div>
+    </div>
+  }
+</section>

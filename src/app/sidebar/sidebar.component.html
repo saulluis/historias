@@ -1,0 +1,136 @@
+<div class="sidebar-container">
+  <!-- 1. Sección del Logo/Nombre -->
+  <div class="logo-header">
+    <!-- Asegúrate de que la ruta de la imagen sea correcta -->
+    <div class="logo-text">
+      <!-- <h2>PALENQUE</h2> -->
+      <img src="/assets/logo-historia.png" alt="Logo Palenque" class="sidebar-logo-img" />
+
+      <p>Mezcal Artesanal</p>
+    </div>
+  </div>
+
+  <!-- 2. Lista de Navegación -->
+  <nav class="nav-list">
+    <!-- INICIO -->
+    <a
+      routerLink="/tabs/home"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <svg
+        class="sidebar-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v4.875h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21V11.25H15.75V21"
+        />
+      </svg>
+      <span>Inicio</span>
+    </a>
+
+    <!-- CATÁLOGO (Apunta a Tienda) -->
+    <a routerLink="/tabs/tienda" routerLinkActive="active-link">
+      <svg
+        class="sidebar-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72m-13.5 8.65h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .415.336.75.75.75Z"
+        />
+      </svg>
+      <span>Tienda</span>
+    </a>
+
+    <!-- EXPERIENCIAS -->
+    <a routerLink="/tabs/experiencia" routerLinkActive="active-link">
+      <svg
+        class="sidebar-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.47-2.47L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.47-2.47L18 2.25l.259 1.036a3.375 3.375 0 0 0 2.47 2.47L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.47 2.47Z"
+        />
+      </svg>
+      <span>Experiencias</span>
+    </a>
+
+    <!-- FORO -->
+    <a routerLink="/tabs/foro" routerLinkActive="active-link">
+      <svg
+        class="sidebar-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M20.25 8.537v5.927a3.375 3.375 0 0 1-3.375 3.375H5.25a3.375 3.375 0 0 1-3.375-3.375V8.537m18 0c0-1.862-1.513-3.375-3.375-3.375H5.25c-1.862 0-3.375 1.513-3.375 3.375m18 0v.006M4.5 8.537v.006m0 0a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm13.5 0a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
+        />
+      </svg>
+      <span>Foro</span>
+    </a>
+
+    <!-- SOLICITUDES -->
+    <!-- <a routerLink="/tabs/solicitudes" routerLinkActive="active-link">
+      <svg
+        class="sidebar-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75v-2.625a3.375 3.375 0 0 1 3.375-3.375h1.5a1.125 1.125 0 0 0 1.125-1.125v-1.5a3.375 3.375 0 0 1 3.375-3.375H15.75m-7.5 12.75h.008v.008H8.25v-.008ZM8.25 9.75h.008v.008H8.25v-.008Z"
+        />
+      </svg>
+      <span>solicitudes</span>
+    </a> -->
+
+  </nav>
+
+  <!-- 3. Botón inferior -->
+  <div class="sidebar-footer">
+    <a class="visita-btn" routerLink="/tabs/visita-personalizada" routerLinkActive="active-link">
+      <svg
+        class="sidebar-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M6.75 3v2.25m10.5-2.25v2.25M6 1.875c.36 0 .72.056 1.06.162a4.5 4.5 0 0 1 6.38 0c.34.106.7.162 1.06.162M6.75 19.5v-1.5m10.5 1.5v-1.5m-10.5-3v-1.5m10.5 3v-1.5m-10.5-3v-1.5m10.5 3v-1.5M5.625 6H18.375c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125H5.625c-.621 0-1.125-.504-1.125-1.125V7.125c0-.621.504-1.125 1.125-1.125Z"
+        />
+      </svg>
+      <span>Visita Personalizada</span>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<button routerLink="/foro">⬅ Regresar</button>
+
+@if (loading) {
+  <p>Cargando...</p>
+} @else {
+  <h2>{{ post.title }}</h2>
+  <small>{{ post.published | date }}</small>
+  <div [innerHTML]="post.content"></div>
+
+  <hr>
+  <h3>Comentarios</h3>
+
+  <form (submit)="$event.preventDefault(); addComment()" style="margin-bottom: 1rem;">
+    <input
+      type="text"
+      placeholder="Tu nombre (opcional)"
+      [(ngModel)]="newComment.author"
+      name="author"
+      style="display:block; width:100%; max-width:600px; margin-bottom:8px; padding:6px;"
+    />
+    <input
+      type="url"
+      placeholder="URL de imagen (opcional)"
+      [(ngModel)]="newComment.imageUrl"
+      name="imageUrl"
+      style="display:block; width:100%; max-width:600px; margin-bottom:8px; padding:6px;"
+    />
+    @if (imageUrlError) {
+      <p style="color:#b00020; margin-top:-4px; margin-bottom:8px;">{{ imageUrlError }}</p>
+    }
+    <textarea
+      placeholder="Escribe tu comentario"
+      [(ngModel)]="newComment.text"
+      name="text"
+      rows="3"
+      style="display:block; width:100%; max-width:600px; margin-bottom:8px; padding:6px;"
+    ></textarea>
+    <button type="submit">Agregar comentario</button>
+  </form>
+
+  @if (comments.length === 0) {
+    <p>Aún no hay comentarios. ¡Sé el primero!</p>
+  } @else {
+    <ul style="list-style:none; padding:0; max-width:600px;">
+      @for (c of comments; track c.date) {
+        <li style="border:1px solid #ddd; border-radius:6px; padding:10px; margin-bottom:8px;">
+          <strong>{{ c.author }}</strong>
+          <small style="float:right;">{{ c.date | date:'short' }}</small>
+          <p style="margin:6px 0 8px 0; white-space:pre-wrap;">{{ c.text }}</p>
+          @if (c.imageUrl) {
+            <img [src]="c.imageUrl" alt="imagen del comentario" style="max-width:100%; height:auto; border-radius:4px;" />
+          }
+        </li>
+      }
+    </ul>
+  }
+}

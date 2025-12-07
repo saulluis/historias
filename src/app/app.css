@@ -1,0 +1,15 @@
+/* :host {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+} */
+
+/* Asegurar que el router-outlet permita scroll */
+router-outlet + * {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+}

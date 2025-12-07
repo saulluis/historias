@@ -1,0 +1,15 @@
+/* src/assets/css/typography.css */
+
+:root {
+  /* Familia de Fuente */
+  --font-family-base: 'Roboto', 'Arial', sans-serif;
+
+  /* Tamaños de Fuente */
+  --font-size-base: 16px;
+  --font-size-h1: 32px;
+  --font-size-h2: 24px;
+
+  /* Pesos de Fuente */
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+}

@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'assets/css/colors.css';
+@import 'assets/css/typography.css';
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Override: permitir scroll cuando Ionic global CSS está activo */
+body { 
+  overflow-y: auto !important; 
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+html, body { 
+  min-height: 100%; 
+  height: auto; 
+  position: relative;
+}
+
+/* Asegurar scroll en componentes */
+app-root {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+/* Scroll suave en móviles */
+* {
+  -webkit-overflow-scrolling: touch;
+}

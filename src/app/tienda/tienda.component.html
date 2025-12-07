@@ -1,0 +1,148 @@
+<div class="tienda-container">
+  
+  <section class="hero">
+    <h2>Nuestra Colección</h2>
+    <p>Mezcales artesanales de la más alta calidad</p>
+  </section>
+
+  <!-- Sección de apartado con usuario -->
+  <section class="controls">
+    @if (selectedUserId && !usuarioVerificado) {
+      <div class="alert-info">
+        <span class="alert-icon">ℹ️</span>
+        <span>Debes verificar tu identidad con el correo electrónico para acceder a todas las funciones.</span>
+      </div>
+    }
+    <div class="controls-header">
+      <label>
+        Usuario:
+        @if (!cargandoUsuarios) {
+          @if (usuarios.length > 0) {
+            <div class="user-selection-container">
+              <select [ngModel]="selectedUserId" (ngModelChange)="onSelectUser($event)">
+                <option [ngValue]="null">Selecciona un usuario</option>
+                @for (u of usuarios; track u.id) {
+                  <option [ngValue]="u.id">{{ u.nome }}</option>
+                }
+              </select>
+              @if (usuarioVerificado && selectedUserId) {
+                <span class="verification-badge">
+                  <span class="badge-icon">✓</span>
+                  <span class="badge-text">Verificado</span>
+                </span>
+              }
+            </div>
+          } @else {
+            <div class="no-usuarios">
+              <span>⚠️ No hay usuarios registrados con experiencias</span>
+            </div>
+          }
+        } @else {
+          <div class="loading-container">
+            <div class="spinner"></div>
+            <span class="loading-text">Cargando usuarios...</span>
+          </div>
+        }
+      </label>
+      
+      <button class="btn-apartados" (click)="toggleApartados()" type="button" [disabled]="!usuarioVerificado">
+        {{ mostrarApartados ? 'Ver Bebidas' : 'Ver Apartados' }}
+      </button>
+    </div>
+  </section>
+
+<div class="bebidas-scroll-container">
+  @if (!mostrarApartados) {
+    @if (bebidas$ | async; as bebidas) {
+      @if (bebidas.length > 0) {
+        @for (b of bebidas; track b.id) {
+        <article class="bebida-card">
+          <header class="bebida-header">
+            <h2>{{ b.nombre }}</h2>
+            <span class="categoria">{{ b.categoria.nombre }}</span>
+          </header>
+
+          <div class="bebida-body">
+            <img *ngIf="b.imagen" [src]="b.imagen" alt="{{ b.nombre }}" class="bebida-imagen" />
+            <div class="bebida-info">
+              <p class="descripcion">{{ b.descripcion }}</p>
+              <p class="precio"><strong>Precio:</strong> {{ b.precio | currency:'MXN':'symbol':'1.2-2' }}</p>
+
+            <div class="qty-controls">
+              <button type="button" (click)="dec(b)" [disabled]="!selectedUserId || !usuarioVerificado">-</button>
+              <span class="qty">{{ qty[b.id] || 0 }}</span>
+              <button type="button" (click)="inc(b)" [disabled]="!selectedUserId || !usuarioVerificado || displayedStock(b) <= 0">+</button>
+            </div>              <p class="stock"><strong>Stock restante:</strong> {{ displayedStock(b) }}</p>
+
+              <button type="button" class="apartar" (click)="apartar(b)" [disabled]="!canApartar(b)">
+                Apartar
+              </button>
+            </div>
+          </div>
+        </article>
+      }
+      } @else {
+        <div class="no-data">
+          <p>No hay bebidas disponibles.</p>
+        </div>
+      }
+    } @else {
+      <div class="loading-container-main">
+        <div class="spinner-large"></div>
+        <span class="loading-text-large">Cargando bebidas...</span>
+      </div>
+    }
+  } @else {
+    <!-- Sección de Apartados -->
+    <div class="apartados-container">
+      <h2 class="apartados-title">📋 Historial de Apartados</h2>
+      
+      @if (apartados.length > 0) {
+        <div class="apartados-lista">
+          @for (apartado of apartados; track apartado.id) {
+            <article class="apartado-card">
+              <button class="btn-eliminar-top" (click)="eliminarApartado(apartado.id)" type="button" title="Eliminar apartado">
+                ✕
+              </button>
+              
+              <h3 class="apartado-titulo">✓ Producto apartado exitosamente</h3>
+              
+              <div class="apartado-detalles-lista">
+                <div class="detalle-linea">
+                  <span class="icono">🍶</span>
+                  <strong>Producto:</strong>
+                  <span>{{ apartado.bebida?.nombre || 'Sin nombre' }}</span>
+                </div>
+                <div class="detalle-linea">
+                  <span class="icono">👤</span>
+                  <strong>Usuario:</strong>
+                  <span>{{ getNombreUsuario(apartado.usuarioID) }}</span>
+                </div>
+                <div class="detalle-linea">
+                  <span class="icono">📧</span>
+                  <strong>Correo:</strong>
+                  <span>{{ getEmailUsuario(apartado.usuarioID) }}</span>
+                </div>
+                <div class="detalle-linea">
+                  <span class="icono">🔢</span>
+                  <strong>Cantidad:</strong>
+                  <span>{{ apartado.cantidad }} unidad(es)</span>
+                </div>
+                <div class="detalle-linea destacado">
+                  <span class="icono">💰</span>
+                  <strong>Total:</strong>
+                  <span class="precio-total">{{ calcularTotal(apartado) | currency:'MXN':'symbol':'1.2-2' }}</span>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      } @else {
+        <div class="no-data">
+          <p>No hay apartados registrados.</p>
+        </div>
+      }
+    </div>
+  }
+</div>
+  </div>

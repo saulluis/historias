@@ -1,0 +1,152 @@
+/* --- Variables y Configuración Base --- */
+:host {
+  --sidebar-bg: #4E3B31;       /* Un café un poco más oscuro y rico (Chocolate Amargo) */
+  --sidebar-text: #E8E8E8;     /* Blanco hueso, menos agresivo que el blanco puro */
+  --sidebar-active-bg: #D2B48C;/* Dorado/Beige para el item activo (Contraste Premium) */
+  --sidebar-active-text: #3E2C22; /* Texto oscuro para el item activo */
+  --visita-btn-bg: #5f7a61;    /* Tu verde olivo está bien */
+  --font-serif: 'Playfair Display', serif; /* SUGERENCIA: Usa una fuente con patines */
+}
+
+.sidebar-container {
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 20px; /* Un poco más de aire */
+  box-shadow: 4px 0 15px rgba(0,0,0,0.15); /* Sombra suave a la derecha para profundidad */
+  position: relative;
+  z-index: 10;
+}
+
+/* --- SECCIÓN DEL LOGO (La Joya de la Corona) --- */
+.logo-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px; /* Separación con el menú */
+
+  .sidebar-logo-img {
+    /* Ajustamos el tamaño para que sea sutil, no invasivo */
+    width: 200px;       
+    height: auto;
+    margin-bottom: 12px; 
+    object-fit: contain;
+    filter: brightness(0) invert(1) opacity(0.9); /* Vuelve el logo blanco si es negro */
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    h2 {
+      margin: 0;
+      font-family: var(--font-serif); /* Fuente elegante */
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 2px; /* Espaciado entre letras = LUJO */
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+
+    p {
+      margin: 4px 0 0 0;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 3px; /* Mucho espacio para el subtítulo */
+      color: #D2B48C;      /* Color dorado/café claro */
+      font-weight: 400;
+    }
+  }
+}
+
+/* --- NAVEGACIÓN --- */
+.nav-list {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  a {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 12px; /* Bordes más redondeados */
+    color: var(--sidebar-text);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease; /* Transición suave para todo */
+
+    .sidebar-icon {
+      width: 1.3rem;
+      height: 1.3rem;
+      margin-right: 14px;
+      color: rgba(255, 255, 255, 0.7); /* Icono un poco transparente */
+      transition: color 0.3s ease;
+    }
+
+    /* ESTADO HOVER (Pasar el mouse) */
+    &:hover:not(.active-link) {
+      background: rgba(255, 255, 255, 0.08); /* Muy sutil */
+      transform: translateX(4px); /* Pequeño movimiento a la derecha */
+      color: #ffffff;
+      
+      .sidebar-icon {
+        color: #ffffff;
+      }
+    }
+
+    /* ESTADO ACTIVO (Página actual) */
+    &.active-link {
+      background: var(--sidebar-active-bg);
+      color: var(--sidebar-active-text); /* Texto oscuro sobre fondo claro */
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* Sombrita para resaltar */
+
+      .sidebar-icon {
+        color: var(--sidebar-active-text); /* Icono oscuro */
+      }
+    }
+  }
+}
+
+/* --- FOOTER --- */
+.sidebar-footer {
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1); /* Línea divisoria sutil */
+
+  .visita-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    background: var(--visita-btn-bg);
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: transform 0.2s, background 0.3s;
+
+    .sidebar-icon {
+      width: 1.2rem;
+      height: 1.2rem;
+      margin-right: 10px;
+    }
+
+    &:hover {
+      background: lighten(#5f7a61, 5%); /* Aclara el verde un poco */
+      transform: scale(1.02); /* Efecto de "pulsar" */
+    }
+    
+    &:active {
+      transform: scale(0.98); /* Efecto de click */
+    }
+  }
+}

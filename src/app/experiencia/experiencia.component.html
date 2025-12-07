@@ -1,0 +1,106 @@
+<div class="experiencias-container">
+  <header class="experiencias-header">
+    <h1>CALENDARIO DE EXPERIENCIAS</h1>
+  </header>
+
+  <!-- Calendario -->
+  <div class="calendario-wrapper">
+    <div class="calendario-header">
+      <button class="nav-btn" (click)="mesAnterior()">‹</button>
+      <h2>{{ getNombreMes() }}</h2>
+      <button class="nav-btn" (click)="mesSiguiente()">›</button>
+    </div>
+
+    <div class="calendario">
+      <!-- Días de la semana -->
+      <div class="dias-semana">
+        @for (dia of diasSemana; track $index) {
+          <div class="dia-semana-header">{{ dia }}</div>
+        }
+      </div>
+
+      <!-- Días del mes -->
+      <div class="dias-grid">
+        @for (dia of diasCalendario(); track dia.fecha.getTime()) {
+          <div 
+            class="dia-celda"
+            [class.otro-mes]="dia.esOtroMes"
+            [class.con-experiencia]="dia.tieneExperiencia"
+            [class.seleccionado]="diaSeleccionado() && mismaFecha(dia.fecha, diaSeleccionado()!)"
+            (click)="seleccionarDia(dia)">
+            <span class="dia-numero">{{ dia.numero }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Lista de próximas experiencias debajo del calendario -->
+  @if (experienciasDelMes().length > 0) {
+    <div class="proximas-experiencias">
+      <h3>Experiencias de {{ getNombreMes().split(' ')[0] }}</h3>
+      <div class="experiencias-lista-scroll">
+        <div class="experiencias-lista">
+          @for (exp of experienciasDelMes(); track exp.id) {
+            <article class="experiencia-item" (click)="abrirFormularioAsistencia(exp)">
+              <div class="experiencia-badge">
+                {{ exp.fecha.getDate() }}
+              </div>
+              <div class="experiencia-info">
+                <h4>{{ exp.name }}</h4>
+                <p>{{ exp.description }}</p>
+                <div class="experiencia-meta">
+                  <span class="costo">${{ exp.costo }}</span>
+                  <span class="capacidad">{{ exp.capacidad }} cupos</span>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Card de experiencia del día seleccionado -->
+  @if (mostrarCardExperiencia() && experienciaSeleccionada()) {
+    <div class="modal-overlay" (click)="cerrarCardExperiencia()">
+      <div class="card-experiencia-dia" (click)="$event.stopPropagation()">
+        <button class="btn-cerrar" (click)="cerrarCardExperiencia()">✕</button>
+        
+        <article class="experiencia-card-detalle">
+          <header class="card-header-naranja">
+            <h2>{{ experienciaSeleccionada()?.name }}</h2>
+            <span class="badge-disponible">Disponible</span>
+          </header>
+          
+          <div class="card-body-experiencia">
+            <p class="descripcion-exp">{{ experienciaSeleccionada()?.description }}</p>
+            
+            <div class="info-experiencia">
+              <div class="info-item-exp">
+                <strong>Fecha:</strong>
+                <span>{{ experienciaSeleccionada()?.fecha | date:'MMM d, y, h:mm a' }}</span>
+              </div>
+              <div class="info-item-exp">
+                <strong>Capacidad:</strong>
+                <span>{{ experienciaSeleccionada()?.capacidad }} lugares</span>
+              </div>
+              <div class="info-item-exp destacado">
+                <strong>Costo:</strong>
+                <span class="precio-exp">{{ experienciaSeleccionada()?.costo | currency:'MXN':'symbol':'1.2-2' }}</span>
+              </div>
+            </div>
+            
+            <button 
+              class="btn-seleccionar-exp" 
+              (click)="abrirFormularioAsistencia(experienciaSeleccionada()!)"
+              [disabled]="getCuposDisponibles(experienciaSeleccionada()!.id) === 0">
+              {{ getCuposDisponibles(experienciaSeleccionada()!.id) > 0 ? 'Seleccionar Cata' : 'Sin cupos' }}
+            </button>
+          </div>
+        </article>
+      </div>
+    </div>
+  }
+
+  
