@@ -1,57 +1,93 @@
-<button routerLink="/foro">⬅ Regresar</button>
+<div class="foro-container">
+  <button routerLink="/foro" class="btn-back">
+    <span class="icon">⬅</span> Regresar
+  </button>
 
-@if (loading) {
-  <p>Cargando...</p>
-} @else {
-  <h2>{{ post.title }}</h2>
-  <small>{{ post.published | date }}</small>
-  <div [innerHTML]="post.content"></div>
-
-  <hr>
-  <h3>Comentarios</h3>
-
-  <form (submit)="$event.preventDefault(); addComment()" style="margin-bottom: 1rem;">
-    <input
-      type="text"
-      placeholder="Tu nombre (opcional)"
-      [(ngModel)]="newComment.author"
-      name="author"
-      style="display:block; width:100%; max-width:600px; margin-bottom:8px; padding:6px;"
-    />
-    <input
-      type="url"
-      placeholder="URL de imagen (opcional)"
-      [(ngModel)]="newComment.imageUrl"
-      name="imageUrl"
-      style="display:block; width:100%; max-width:600px; margin-bottom:8px; padding:6px;"
-    />
-    @if (imageUrlError) {
-      <p style="color:#b00020; margin-top:-4px; margin-bottom:8px;">{{ imageUrlError }}</p>
-    }
-    <textarea
-      placeholder="Escribe tu comentario"
-      [(ngModel)]="newComment.text"
-      name="text"
-      rows="3"
-      style="display:block; width:100%; max-width:600px; margin-bottom:8px; padding:6px;"
-    ></textarea>
-    <button type="submit">Agregar comentario</button>
-  </form>
-
-  @if (comments.length === 0) {
-    <p>Aún no hay comentarios. ¡Sé el primero!</p>
+  @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando contenido...</p>
+    </div>
   } @else {
-    <ul style="list-style:none; padding:0; max-width:600px;">
-      @for (c of comments; track c.date) {
-        <li style="border:1px solid #ddd; border-radius:6px; padding:10px; margin-bottom:8px;">
-          <strong>{{ c.author }}</strong>
-          <small style="float:right;">{{ c.date | date:'short' }}</small>
-          <p style="margin:6px 0 8px 0; white-space:pre-wrap;">{{ c.text }}</p>
-          @if (c.imageUrl) {
-            <img [src]="c.imageUrl" alt="imagen del comentario" style="max-width:100%; height:auto; border-radius:4px;" />
+    <article class="post-card">
+      <header class="post-header">
+        <h2 class="post-title">{{ post.title }}</h2>
+        <span class="post-date">{{ post.published | date:'fullDate' }}</span>
+      </header>
+      
+      <div class="post-body" [innerHTML]="post.content"></div>
+    </article>
+
+    <div class="divider"></div>
+
+    <section class="comments-section">
+      <h3>Comentarios <span class="badge">{{ comments.length }}</span></h3>
+
+      <form (submit)="$event.preventDefault(); addComment()" class="comment-form">
+        <div class="form-group">
+          <input
+            type="text"
+            placeholder="Tu nombre (opcional)"
+            [(ngModel)]="newComment.author"
+            name="author"
+            class="form-input"
+          />
+        </div>
+        
+        <div class="form-group">
+          <input
+            type="url"
+            placeholder="URL de imagen (opcional)"
+            [(ngModel)]="newComment.imageUrl"
+            name="imageUrl"
+            class="form-input"
+          />
+          @if (imageUrlError) {
+            <p class="error-msg">{{ imageUrlError }}</p>
           }
-        </li>
-      }
-    </ul>
+        </div>
+
+        <div class="form-group">
+          <textarea
+            placeholder="Escribe tu opinión aquí..."
+            [(ngModel)]="newComment.text"
+            name="text"
+            rows="3"
+            class="form-input textarea"
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          Agregar comentario
+        </button>
+      </form>
+
+      <div class="comments-list">
+        @if (comments.length === 0) {
+          <div class="empty-state">
+            <p>Aún no hay comentarios. ¡Sé el primero en opinar!</p>
+          </div>
+        } @else {
+          <ul class="list-unstyled">
+            @for (c of comments; track c.date) {
+              <li class="comment-card animate-in">
+                <div class="comment-header">
+                  <strong>{{ c.author }}</strong>
+                  <small>{{ c.date | date:'medium' }}</small>
+                </div>
+                
+                <p class="comment-text">{{ c.text }}</p>
+                
+                @if (c.imageUrl) {
+                  <div class="comment-image-wrapper">
+                    <img [src]="c.imageUrl" alt="Imagen adjunta" class="comment-img" />
+                  </div>
+                }
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    </section>
   }
-}
+</div>

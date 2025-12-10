@@ -1,0 +1,249 @@
+// Variables de diseño
+$primary-color: #3b82f6;
+$primary-hover: #2563eb;
+$text-dark: #1f2937;
+$text-gray: #6b7280;
+$bg-light: #f3f4f6;
+$white: #ffffff;
+$danger: #ef4444;
+$radius: 12px;
+$shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+.foro-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: $text-dark;
+}
+
+// Botón regresar
+.btn-back {
+  background: transparent;
+  border: 1px solid #d1d5db;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  color: $text-gray;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 2rem;
+
+  &:hover {
+    border-color: $text-dark;
+    color: $text-dark;
+    background-color: white;
+  }
+}
+
+// Estado de carga
+.loading-state {
+  text-align: center;
+  padding: 3rem;
+  color: $text-gray;
+}
+
+// Tarjeta del Post Principal
+.post-card {
+  background: $white;
+  padding: 2rem;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  margin-bottom: 2rem;
+
+  .post-header {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 1rem;
+
+    .post-title {
+      font-size: 2rem;
+      margin: 0 0 0.5rem 0;
+      color: $text-dark;
+      line-height: 1.2;
+    }
+
+    .post-date {
+      color: $text-gray;
+      font-size: 0.9rem;
+      text-transform: capitalize;
+    }
+  }
+
+  .post-body {
+    line-height: 1.7;
+    font-size: 1.05rem;
+    
+    // Asegurar que imágenes dentro del HTML inyectado no rompan el diseño
+    ::ng-deep img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+  }
+}
+
+.divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 2rem 0;
+}
+
+// Sección Comentarios
+.comments-section {
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+  }
+
+  .badge {
+    background: $bg-light;
+    color: $text-gray;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    vertical-align: middle;
+  }
+}
+
+// Formulario
+.comment-form {
+  background: $bg-light;
+  padding: 1.5rem;
+  border-radius: $radius;
+  margin-bottom: 2rem;
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    box-sizing: border-box; // Importante para que el padding no rompa el ancho
+
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+    }
+  }
+
+  .textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .error-msg {
+    color: $danger;
+    font-size: 0.85rem;
+    margin-top: 5px;
+  }
+
+  .btn-submit {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100%;
+
+    &:hover {
+      background-color: $primary-hover;
+    }
+
+    @media (min-width: 600px) {
+      width: auto;
+    }
+  }
+}
+
+// Lista de Comentarios
+.comments-list {
+  .empty-state {
+    text-align: center;
+    color: $text-gray;
+    padding: 2rem;
+    background: white;
+    border: 1px dashed #d1d5db;
+    border-radius: $radius;
+  }
+
+  .list-unstyled {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .comment-card {
+    background: $white;
+    border: 1px solid #e5e7eb;
+    border-radius: $radius;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    transition: transform 0.2s;
+
+    &:hover {
+      border-color: #d1d5db;
+    }
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+
+      strong {
+        color: $text-dark;
+        font-size: 1.05rem;
+      }
+
+      small {
+        color: $text-gray;
+        font-size: 0.85rem;
+      }
+    }
+
+    .comment-text {
+      color: #374151;
+      white-space: pre-wrap;
+      line-height: 1.5;
+      margin: 0 0 1rem 0;
+    }
+
+    .comment-image-wrapper {
+      margin-top: 10px;
+      
+      .comment-img {
+        max-width: 100%;
+        max-height: 300px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+      }
+    }
+  }
+
+  // Animación simple de entrada
+  .animate-in {
+    animation: fadeIn 0.4s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

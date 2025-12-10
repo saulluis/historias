@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BloggerService } from '../services/blogger.service';
-import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-foro',
   templateUrl: './foro.component.html',
   styleUrls: ['./foro.component.scss'],
-  imports: [DatePipe]
+  imports: []
 })
 export class ForoComponent implements OnInit {
 
